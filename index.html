@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallito & Piedra — Laja Natural para Arquitectura y Diseño</title>
+  <meta name="description" content="Laja y piedra natural para fachadas, pisos y revestimientos. Laja granítica, pizarra, talomoye, rococho. Despacho a todo el Perú." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --carbon:     #0a0a0a;
+      --graphite:   #141414;
+      --charcoal:   #1c1c1c;
+      --iron:       #2a2a2a;
+      --smoke:      #3d3d3d;
+      --ash:        #6b6b6b;
+      --silver:     #a8a8a8;
+      --chalk:      #e8e4dc;
+      --cream:      #f4f1eb;
+      --white:      #fdfcfa;
+      --gold:       #c8a96e;
+      --gold-light: #e8d5a8;
+      --wa:         #25D366;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--carbon); overflow-x: hidden; font-weight: 300; }
+
+    /* ANIMACIONES */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(1.08); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 3rem; background: rgba(10,10,10,0.93); backdrop-filter: blur(20px); border-bottom: 0.5px solid rgba(200,169,110,0.2); transition: padding 0.3s; }
+    nav.scrolled { padding: 0.8rem 3rem; }
+    .logo { display: flex; flex-direction: column; gap: 2px; }
+    .logo-main { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--chalk); letter-spacing: 1px; }
+    .logo-sub { font-size: 9px; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; font-weight: 400; }
+    .nav-menu { display: flex; gap: 2.5rem; align-items: center; }
+    .nav-menu a { color: var(--silver); text-decoration: none; font-size: 12px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.25s; position: relative; }
+    .nav-menu a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
+    .nav-menu a:hover { color: var(--chalk); }
+    .nav-menu a:hover::after { width: 100%; }
+    .nav-wa { display: flex; align-items: center; gap: 8px; background: transparent; color: var(--gold); border: 0.5px solid var(--gold); padding: 9px 20px; font-size: 11px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; transition: all 0.25s; }
+    .nav-wa:hover { background: var(--gold); color: var(--carbon); }
+
+    /* HAMBURGER */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; z-index: 300; }
+    .hamburger span { width: 24px; height: 1.5px; background: var(--chalk); transition: all 0.3s; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(4px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(4px, -5px); }
+
+    /* HERO */
+    .hero { height: 100vh; min-height: 700px; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+    .hero-left { background: var(--graphite); display: flex; flex-direction: column; justify-content: flex-end; padding: 5rem 4rem; position: relative; z-index: 2; }
+    .hero-eyebrow { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; font-weight: 400; animation: fadeUp 0.6s ease 0.2s both; }
+    .hero-h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 5vw, 5rem); font-weight: 400; color: var(--chalk); line-height: 1.05; margin-bottom: 1.5rem; animation: fadeUp 0.8s ease 0.4s both; }
+    .hero-h1 em { font-style: italic; color: var(--gold-light); }
+    .hero-desc { font-size: 14px; color: var(--silver); line-height: 1.8; max-width: 380px; margin-bottom: 2.5rem; font-weight: 300; animation: fadeUp 0.8s ease 0.6s both; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; animation: fadeUp 0.8s ease 0.8s both; }
+    .btn-primary { background: var(--gold); color: var(--carbon); border: none; padding: 14px 28px; font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-secondary { background: transparent; color: var(--chalk); border: 0.5px solid rgba(232,228,220,0.3); padding: 14px 28px; font-size: 11px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-secondary:hover { border-color: var(--chalk); }
+    .hero-right { position: relative; overflow: hidden; }
+    .hero-right img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.85) contrast(1.1); animation: scaleIn 1.4s ease both; }
+    .hero-right::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--graphite) 0%, transparent 30%); }
+    .hero-stats { position: absolute; bottom: 3rem; right: 3rem; z-index: 10; display: flex; gap: 2rem; animation: fadeUp 0.8s ease 1s both; }
+    .hero-stat { text-align: right; }
+    .hero-stat strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 600; color: var(--gold); line-height: 1; }
+    .hero-stat span { font-size: 9px; color: var(--silver); letter-spacing: 2px; text-transform: uppercase; }
+
+    /* BANDA */
+    .banda { background: var(--gold); padding: 1rem 3rem; display: flex; align-items: center; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+    .banda-item { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--carbon); font-weight: 500; display: flex; align-items: center; gap: 8px; }
+    .banda-sep { width: 1px; height: 18px; background: rgba(0,0,0,0.2); }
+
+    /* SECCIONES */
+    section { padding: 6rem 3rem; }
+    .container { max-width: 1140px; margin: 0 auto; }
+    .eyebrow { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; font-weight: 400; }
+    .titulo-seccion { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 400; color: var(--carbon); line-height: 1.1; margin-bottom: 1rem; }
+    .subtitulo { font-size: 14px; color: var(--ash); line-height: 1.8; max-width: 500px; font-weight: 300; }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity: 0; transform: translateY(25px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* PRODUCTOS */
+    .sec-productos { background: var(--cream); }
+    .productos-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem; }
+    .productos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--chalk); }
+    .producto-card { background: var(--white); cursor: pointer; overflow: hidden; transition: background 0.3s; position: relative; }
+    .producto-card:hover { background: var(--carbon); }
+    .producto-img-wrap { height: 240px; overflow: hidden; position: relative; background: var(--chalk); }
+    .producto-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; filter: grayscale(15%); }
+    .producto-card:hover .producto-img-wrap img { transform: scale(1.06); filter: grayscale(0%); }
+    .producto-num { position: absolute; top: 12px; left: 14px; font-family: 'Cormorant Garamond', serif; font-size: 11px; color: var(--gold); letter-spacing: 1px; z-index: 2; background: rgba(10,10,10,0.7); padding: 3px 8px; }
+    .producto-body { padding: 1.25rem 1.5rem 1.5rem; }
+    .producto-body h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--carbon); margin-bottom: 6px; transition: color 0.3s; }
+    .producto-card:hover .producto-body h3 { color: var(--gold-light); }
+    .producto-body p { font-size: 12px; color: var(--ash); line-height: 1.6; margin-bottom: 14px; font-weight: 300; transition: color 0.3s; }
+    .producto-card:hover .producto-body p { color: var(--silver); }
+    .producto-link { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 500; display: flex; align-items: center; gap: 6px; transition: gap 0.3s; }
+    .producto-card:hover .producto-link { gap: 10px; }
+
+    /* POR QUÉ */
+    .sec-porque { background: var(--carbon); }
+    .sec-porque .titulo-seccion { color: var(--chalk); }
+    .sec-porque .subtitulo { color: var(--ash); }
+    .porque-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 3.5rem; border: 0.5px solid var(--iron); }
+    .razon { padding: 2.5rem 2rem; border-right: 0.5px solid var(--iron); border-bottom: 0.5px solid var(--iron); transition: background 0.3s; }
+    .razon:nth-child(3), .razon:nth-child(6) { border-right: none; }
+    .razon:nth-child(4), .razon:nth-child(5), .razon:nth-child(6) { border-bottom: none; }
+    .razon:hover { background: var(--charcoal); }
+    .razon-num { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600; color: var(--gold); opacity: 0.4; margin-bottom: 1rem; line-height: 1; }
+    .razon h4 { font-size: 13px; font-weight: 500; color: var(--chalk); margin-bottom: 10px; letter-spacing: 0.5px; }
+    .razon p { font-size: 12px; color: var(--ash); line-height: 1.7; font-weight: 300; }
+
+    /* GALERÍA */
+    .sec-proyectos { background: var(--white); padding-bottom: 0; }
+    .galeria { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 300px 300px; gap: 2px; margin-top: 3rem; }
+    .galeria-item { position: relative; overflow: hidden; background: var(--chalk); }
+    .galeria-item:first-child { grid-row: 1 / 3; }
+    .galeria-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s, filter 0.4s; filter: grayscale(20%); }
+    .galeria-item:hover img { transform: scale(1.04); filter: grayscale(0%); }
+    .galeria-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem 1.25rem; background: linear-gradient(transparent, rgba(10,10,10,0.75)); opacity: 0; transition: opacity 0.3s; }
+    .galeria-item:hover .galeria-caption { opacity: 1; }
+    .galeria-caption span { font-size: 11px; color: var(--chalk); letter-spacing: 1.5px; text-transform: uppercase; }
+    .galeria-extra { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 2px; }
+    .galeria-extra .galeria-item { height: 280px; }
+    .proyectos-cta { background: var(--graphite); padding: 2.5rem 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; margin-top: 2px; }
+    .proyectos-cta p { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--chalk); font-weight: 400; }
+    .proyectos-cta em { font-style: italic; color: var(--gold-light); }
+
+    /* CONTACTO */
+    .sec-contacto { background: var(--cream); }
+    .contacto-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; margin-top: 3rem; align-items: start; }
+    .contacto-datos h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 400; color: var(--carbon); margin-bottom: 0.75rem; }
+    .contacto-datos p { font-size: 13px; color: var(--ash); line-height: 1.8; margin-bottom: 2rem; font-weight: 300; }
+    .dato-fila { display: flex; gap: 1rem; padding: 0.75rem 0; border-bottom: 0.5px solid rgba(0,0,0,0.1); font-size: 13px; }
+    .dato-label { color: var(--ash); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; min-width: 80px; padding-top: 1px; }
+    .dato-val { color: var(--carbon); font-weight: 400; }
+    .contacto-form { background: var(--carbon); padding: 2.5rem; }
+    .form-titulo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--chalk); margin-bottom: 1.5rem; font-weight: 400; }
+    .campo { margin-bottom: 1rem; }
+    .campo label { display: block; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--silver); margin-bottom: 6px; font-weight: 400; }
+    .campo input, .campo textarea, .campo select { width: 100%; background: var(--iron); border: 0.5px solid var(--smoke); color: var(--chalk); padding: 11px 14px; font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 300; outline: none; transition: border-color 0.2s; appearance: none; border-radius: 0; }
+    .campo input::placeholder, .campo textarea::placeholder { color: var(--ash); }
+    .campo input:focus, .campo textarea:focus, .campo select:focus { border-color: var(--gold); }
+    .campo select option { background: var(--charcoal); }
+    .campo textarea { resize: vertical; min-height: 80px; }
+    .btn-enviar { width: 100%; background: var(--gold); color: var(--carbon); border: none; padding: 14px; font-size: 11px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; transition: all 0.25s; margin-top: 0.5rem; }
+    .btn-enviar:hover { background: var(--gold-light); }
+
+    /* FOOTER */
+    footer { background: var(--carbon); padding: 3rem; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; align-items: start; border-top: 0.5px solid var(--iron); }
+    .footer-marca .logo-main { font-size: 18px; }
+    .footer-marca p { font-size: 12px; color: var(--ash); margin-top: 1rem; line-height: 1.7; font-weight: 300; }
+    .footer-col h5 { font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; font-weight: 400; }
+    .footer-col a { display: block; font-size: 12px; color: var(--silver); text-decoration: none; margin-bottom: 8px; transition: color 0.2s; font-weight: 300; }
+    .footer-col a:hover { color: var(--chalk); }
+    .footer-bottom { grid-column: 1 / -1; padding-top: 2rem; margin-top: 1rem; border-top: 0.5px solid var(--iron); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    .footer-bottom span { font-size: 11px; color: var(--ash); font-weight: 300; }
+
+    /* WA FLOTANTE */
+    .wa-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 999; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+    .wa-btn { width: 56px; height: 56px; background: var(--wa); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(37,211,102,0.35); animation: fadeUp 0.6s ease 1.2s both; }
+    .wa-btn:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(37,211,102,0.5); }
+    .wa-label { background: var(--carbon); color: var(--chalk); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 5px 12px; white-space: nowrap; opacity: 0; transform: translateX(8px); transition: all 0.2s; pointer-events: none; }
+    .wa-float:hover .wa-label { opacity: 1; transform: translateX(0); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-menu { 
+        display: none; 
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+        background: rgba(10,10,10,0.97); 
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center; 
+        gap: 2.5rem; 
+        z-index: 250; 
+      }
+      .nav-menu.open { display: flex; }
+      .nav-menu.open a { font-size: 18px; letter-spacing: 3px; }
+      .hamburger { display: flex; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { position: absolute; inset: 0; z-index: 0; }
+      .hero-right::after { background: linear-gradient(90deg, rgba(20,20,20,0.92) 0%, rgba(20,20,20,0.6) 100%); }
+      .hero-left { padding: 6rem 1.5rem 3rem; z-index: 2; background: transparent; }
+      .hero-stats { position: static; margin-top: 2rem; justify-content: flex-start; }
+      section { padding: 4rem 1.5rem; }
+      .productos-grid { grid-template-columns: 1fr 1fr; }
+      .porque-grid { grid-template-columns: 1fr; }
+      .razon { border-right: none !important; }
+      .razon:last-child { border-bottom: none; }
+      .galeria { grid-template-columns: 1fr; grid-template-rows: 280px 220px 220px; }
+      .galeria-item:first-child { grid-row: auto; }
+      .galeria-extra { grid-template-columns: 1fr; }
+      .galeria-extra .galeria-item { height: 220px; }
+      .contacto-layout { grid-template-columns: 1fr; gap: 2rem; }
+      footer { grid-template-columns: 1fr; }
+      .banda { gap: 1rem; padding: 1rem 1.5rem; }
+      .banda-sep { display: none; }
+      .nav-wa { display: none; }
+    }
+
+    @media (max-width: 500px) {
+      .productos-grid { grid-template-columns: 1fr; }
+      .hero-h1 { font-size: 2.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <span class="logo-main">Gallito & Piedra</span>
+    <span class="logo-sub">Laja Natural · Arquitectura & Diseño</span>
+  </div>
+  <div class="nav-menu" id="navMenu">
+    <a href="#materiales" onclick="cerrarMenu()">Materiales</a>
+    <a href="#proyectos" onclick="cerrarMenu()">Proyectos</a>
+    <a href="#contacto" onclick="cerrarMenu()">Contacto</a>
+  </div>
+  <a class="nav-wa" href="https://wa.me/51968603237?text=Hola!%20Quisiera%20cotizar%20laja%20natural" target="_blank">Cotizar — WhatsApp</a>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Laja Natural · Lima, Perú · Desde 2012</p>
+    <h1 class="hero-h1">Materiales que<br/>definen <em>espacios</em><br/>extraordinarios</h1>
+    <p class="hero-desc">Laja y piedra natural para arquitectura, diseño de interiores y fachadas de alto estándar. Corte a medida y despacho a todo el Perú.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="https://wa.me/51968603237?text=Hola!%20Quisiera%20cotizar%20laja%20para%20mi%20proyecto" target="_blank">Solicitar cotización</a>
+      <a class="btn-secondary" href="#materiales">Ver materiales</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>6+</strong><span>Tipos de laja</span></div>
+      <div class="hero-stat"><strong>500+</strong><span>Proyectos</span></div>
+      <div class="hero-stat"><strong>Nacional</strong><span>Despacho</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="./public/portada.jpg" alt="Fachada con laja natural y escaleras de granito" />
+  </div>
+</div>
+
+<!-- BANDA -->
+<div class="banda">
+  <div class="banda-item">Piedra 100% natural</div>
+  <div class="banda-sep"></div>
+  <div class="banda-item">Corte a medida</div>
+  <div class="banda-sep"></div>
+  <div class="banda-item">Despacho a todo el Perú</div>
+  <div class="banda-sep"></div>
+  <div class="banda-item">Cotización en minutos</div>
+  <div class="banda-sep"></div>
+  <div class="banda-item">+10 años de experiencia</div>
+</div>
+
+<!-- MATERIALES -->
+<section class="sec-productos" id="materiales">
+  <div class="container">
+    <div class="productos-header reveal">
+      <div>
+        <p class="eyebrow">Colección de materiales</p>
+        <h2 class="titulo-seccion">Laja natural<br/>de origen peruano</h2>
+      </div>
+      <p class="subtitulo">Cada pieza extraída directamente de canteras del sur del Perú. Textura, color y carácter únicos en cada formato.</p>
+    </div>
+    <div class="productos-grid">
+
+      <!-- 01 Granítica Ayacuchana -->
+      <div class="producto-card reveal" onclick="cotizarProducto('Laja Granítica Ayacuchana')">
+        <div class="producto-img-wrap">
+          <span class="producto-num">01</span>
+          <img src="./public/productos/granitica.png" alt="Laja Granítica Ayacuchana" />
+        </div>
+        <div class="producto-body">
+          <h3>Laja Granítica Ayacuchana</h3>
+          <p>Modelo 10×10, 20×10, 20 variable, fachaleta rústica. Alta resistencia para fachadas y pisos exteriores.</p>
+          <span class="producto-link">Cotizar este material →</span>
+        </div>
+      </div>
+
+      <!-- 02 Pizarra Negra -->
+      <div class="producto-card reveal" onclick="cotizarProducto('Laja Pizarra Negra')">
+        <div class="producto-img-wrap">
+          <span class="producto-num">02</span>
+          <img src="./public/productos/pizarra.png" alt="Laja Pizarra Negra" />
+        </div>
+        <div class="producto-body">
+          <h3>Laja Pizarra Negra</h3>
+          <p>Fachaleta negra, modelo 10 variable. Acabado sofisticado para interiores de diseño y exteriores modernos.</p>
+          <span class="producto-link">Cotizar este material →</span>
+        </div>
+      </div>
+
+      <!-- 03 Talomoye -->
+      <div class="producto-card reveal" onclick="cotizarProducto('Laja Talomoye')">
+        <div class="producto-img-wrap">
+          <span class="producto-num">03</span>
+          <img src="./public/productos/talamoye.png" alt="Laja Talomoye" />
+        </div>
+        <div class="producto-body">
+          <h3>Laja Talomoye</h3>
+          <p>Modelo 5 variable, 10×10, retazo irregular. Textura natural única e irrepetible en cada pieza.</p>
+          <span class="producto-link">Cotizar este material →</span>
+        </div>
+      </div>
+
+      <!-- 04 Yura Blanca -->
+      <div class="producto-card reveal" onclick="cotizarProducto('Laja Yura Blanca')">
+        <div class="producto-img-wrap">
+          <span class="producto-num">04</span>
+          <img src="./public/productos/yura.png" alt="Laja Yura Blanca" />
+        </div>
+        <div class="producto-body">
+          <h3>Laja Yura Blanca</h3>
+          <p>Fachaleta blanca rústica, modelo rústico. Elegancia natural para paredes de diseño interior y exterior.</p>
+          <span class="producto-link">Cotizar este material →</span>
+        </div>
+      </div>
+
+      <!-- 05 Arequipeña -->
+      <div class="producto-card reveal" onclick="cotizarProducto('Laja Arequipeña')">
+        <div class="producto-img-wrap">
+          <span class="producto-num">05</span>
+          <img src="./public/productos/arequipeña.png" alt="Laja Arequipeña" />
+        </div>
+        <div class="producto-body">
+          <h3>Laja Arequipeña</h3>
+          <p>Cuadrada con bordes naturales, tonos beige. Acabado rústico de alta durabilidad para enchapes y pisos.</p>
+          <span class="producto-link">Cotizar este material →</span>
+        </div>
+      </div>
+
+      <!-- 06 Rococho Arequipeño -->
+      <div class="producto-card reveal" onclick="cotizarProducto('Rococho Arequipeño')">
+        <div class="producto-img-wrap">
+          <span class="producto-num">06</span>
+          <img src="./public/productos/rococho.png" alt="Rococho Arequipeño" />
+        </div>
+        <div class="producto-body">
+          <h3>Rococho Arequipeño</h3>
+          <p>Cara lisa y rústico quemado, espesor 1.5 cm. Enchape de fachadas con carácter y textura únicos.</p>
+          <span class="producto-link">Cotizar este material →</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- POR QUÉ NOSOTROS -->
+<section class="sec-porque">
+  <div class="container">
+    <div class="reveal">
+      <p class="eyebrow">Nuestra propuesta de valor</p>
+      <h2 class="titulo-seccion">Por qué los arquitectos<br/>y diseñadores nos eligen</h2>
+    </div>
+    <div class="porque-grid">
+      <div class="razon reveal"><div class="razon-num">01</div><h4>Origen certificado</h4><p>Piedra extraída directamente de canteras del sur del Perú. Sin intermediarios, con trazabilidad completa del material.</p></div>
+      <div class="razon reveal"><div class="razon-num">02</div><h4>Corte técnico a medida</h4><p>Cortamos según planos y especificaciones de tu proyecto. Tolerancias precisas para instalación profesional y sin desperdicio.</p></div>
+      <div class="razon reveal"><div class="razon-num">03</div><h4>Despacho nacional</h4><p>Logística a Lima, Arequipa, Cusco, Trujillo y todo el Perú. Embalaje especializado para materiales pétreos de alta calidad.</p></div>
+      <div class="razon reveal"><div class="razon-num">04</div><h4>Asesoría técnica gratuita</h4><p>Te ayudamos a especificar el material correcto según la aplicación: fachada, piso, revestimiento interior o enchape exterior.</p></div>
+      <div class="razon reveal"><div class="razon-num">05</div><h4>Precio de cantera</h4><p>Sin intermediarios. Trato directo con el proveedor para los mejores precios del mercado nacional por metro cuadrado.</p></div>
+      <div class="razon reveal"><div class="razon-num">06</div><h4>Más de 500 proyectos</h4><p>Residencias, hoteles, restaurantes y edificios comerciales ejecutados en más de 10 años trabajando en Lima y provincias.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section class="sec-proyectos" id="proyectos">
+  <div class="container">
+    <div class="reveal">
+      <p class="eyebrow">Galería de obra</p>
+      <h2 class="titulo-seccion">Proyectos ejecutados<br/>con nuestros materiales</h2>
+      <p class="subtitulo">Fachadas, pisos, paredes y enchapes en todo el Perú. Cada proyecto refleja el carácter único de la piedra natural.</p>
+    </div>
+    <div class="galeria reveal">
+      <!-- Grande izquierda: fachada moderna con laja -->
+      <div class="galeria-item">
+        <img src="./public/proyectos/proyecto2.png" alt="Fachada moderna con laja talomoye" />
+        <div class="galeria-caption"><span>Fachada residencial con laja talomoye — Lima</span></div>
+      </div>
+      <!-- Derecha arriba -->
+      <div class="galeria-item">
+        <img src="./public/proyectos/proyecto1.png" alt="Enchape en jardinera urbana" />
+        <div class="galeria-caption"><span>Enchape urbano con laja granítica</span></div>
+      </div>
+      <!-- Derecha abajo -->
+      <div class="galeria-item">
+        <img src="./public/proyectos/proyecto3.png" alt="Residencia con laja en columnas" />
+        <div class="galeria-caption"><span>Residencia con columnas de laja natural</span></div>
+      </div>
+    </div>
+    <!-- Fila extra con proyecto 4 y portada -->
+    <div class="galeria-extra reveal">
+      <div class="galeria-item">
+        <img src="./public/proyectos/proyecto4.png" alt="Diseño con rococho y laja" />
+        <div class="galeria-caption"><span>Diseño arquitectónico — Rococho y laja combinados</span></div>
+      </div>
+      <div class="galeria-item">
+        <img src="./public/portada.jpg" alt="Escaleras con piedra natural" />
+        <div class="galeria-caption"><span>Escaleras y muros — Piedra granítica</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="proyectos-cta">
+    <p>¿Tienes un proyecto? <em>Hablemos.</em></p>
+    <a class="btn-primary" href="https://wa.me/51968603237?text=Hola!%20Quisiera%20ver%20m%C3%A1s%20proyectos%20y%20cotizar%20laja" target="_blank">Ver más proyectos — WhatsApp</a>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="sec-contacto" id="contacto">
+  <div class="container">
+    <div class="reveal">
+      <p class="eyebrow">Contacto directo</p>
+      <h2 class="titulo-seccion">Solicita tu cotización</h2>
+    </div>
+    <div class="contacto-layout reveal">
+      <div class="contacto-datos">
+        <h3>Hablemos sobre<br/>tu proyecto</h3>
+        <p>Cuéntanos las dimensiones, el tipo de espacio y el material que necesitas. Te respondemos con una cotización detallada en minutos por WhatsApp.</p>
+        <div class="dato-fila"><span class="dato-label">WhatsApp</span><span class="dato-val">+51 968 603 237</span></div>
+        <div class="dato-fila"><span class="dato-label">RUC</span><span class="dato-val">10091300775</span></div>
+        <div class="dato-fila"><span class="dato-label">Sede</span><span class="dato-val">Jr. Flor Iris Sn, SJM — Lima</span></div>
+        <div class="dato-fila"><span class="dato-label">Cobertura</span><span class="dato-val">Todo el Perú</span></div>
+        <div class="dato-fila" style="border:none"><span class="dato-label">Horario</span><span class="dato-val">Lun — Sáb, 8:00 — 18:00</span></div>
+        <br/>
+        <a class="btn-primary" href="https://wa.me/51968603237?text=Hola!%20Quisiera%20cotizar%20laja%20natural" target="_blank">Abrir WhatsApp ahora</a>
+      </div>
+      <div class="contacto-form">
+        <p class="form-titulo">Formulario de cotización</p>
+        <div class="campo"><label>Nombre completo</label><input type="text" id="f-nombre" placeholder="Ej: Juan Pérez" /></div>
+        <div class="campo">
+          <label>Material requerido</label>
+          <select id="f-producto">
+            <option value="">Seleccionar material...</option>
+            <option>Laja Granítica Ayacuchana</option>
+            <option>Laja Pizarra Negra</option>
+            <option>Laja Talomoye</option>
+            <option>Laja Yura Blanca</option>
+            <option>Laja Arequipeña</option>
+            <option>Rococho Arequipeño</option>
+            <option>Necesito asesoría para elegir</option>
+          </select>
+        </div>
+        <div class="campo"><label>Cantidad estimada (m²)</label><input type="text" id="f-cantidad" placeholder="Ej: 80 m²" /></div>
+        <div class="campo"><label>Descripción del proyecto</label><textarea id="f-msg" placeholder="Tipo de espacio, acabado deseado, fecha estimada..."></textarea></div>
+        <a class="btn-enviar" href="#" onclick="enviarForm(event)">Enviar por WhatsApp →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-marca">
+    <div class="logo">
+      <span class="logo-main">Gallito & Piedra</span>
+      <span class="logo-sub" style="color:var(--gold);font-size:9px;letter-spacing:3px;text-transform:uppercase">Arquitectura & Diseño Natural</span>
+    </div>
+    <p>Proveedor de laja y piedra natural para proyectos de arquitectura y diseño de interiores en todo el Perú. Más de 10 años de experiencia.</p>
+  </div>
+  <div class="footer-col">
+    <h5>Materiales</h5>
+    <a href="#materiales">Laja Granítica Ayacuchana</a>
+    <a href="#materiales">Laja Pizarra Negra</a>
+    <a href="#materiales">Laja Talomoye</a>
+    <a href="#materiales">Laja Yura Blanca</a>
+    <a href="#materiales">Laja Arequipeña</a>
+    <a href="#materiales">Rococho Arequipeño</a>
+  </div>
+  <div class="footer-col">
+    <h5>Contacto</h5>
+    <a href="https://wa.me/51968603237" target="_blank">+51 968 603 237</a>
+    <a href="#contacto">Solicitar cotización</a>
+    <a href="#proyectos">Ver proyectos</a>
+    <a href="#materiales">Catálogo completo</a>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Félix Mendoza Ochante — RUC 10091300775</span>
+    <span>Jr. Flor Iris Sn, San Juan de Miraflores — Lima, Perú</span>
+  </div>
+</footer>
+
+<!-- WA FLOTANTE -->
+<div class="wa-float">
+  <span class="wa-label">Cotizar ahora</span>
+  <a class="wa-btn" href="https://wa.me/51968603237?text=Hola!%20Quisiera%20cotizar%20laja%20natural" target="_blank" aria-label="WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.532 5.855L.058 23.054a1 1 0 001.24 1.24l5.188-1.474A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.933 0-3.742-.518-5.299-1.424l-.38-.223-3.932 1.118 1.118-3.932-.223-.38A9.961 9.961 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+  </a>
+</div>
+
+<script>
+  // Menú hamburguesa
+  function toggleMenu() {
+    document.getElementById('navMenu').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('active');
+  }
+  function cerrarMenu() {
+    document.getElementById('navMenu').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('active');
+  }
+
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => revealObserver.observe(el));
+
+  // Cotizar producto
+  function cotizarProducto(nombre) {
+    const msg = encodeURIComponent(`Hola! Vi su página web y me interesa cotizar:\n*${nombre}*\n\n¿Cuál es el precio por m²?`)
+    window.open(`https://wa.me/51968603237?text=${msg}`, '_blank')
+  }
+
+  // Formulario a WhatsApp
+  function enviarForm(e) {
+    e.preventDefault()
+    const nombre   = document.getElementById('f-nombre').value.trim()
+    const producto = document.getElementById('f-producto').value
+    const cantidad = document.getElementById('f-cantidad').value.trim()
+    const msg      = document.getElementById('f-msg').value.trim()
+    let texto = `Hola! Solicito cotización desde su web.`
+    if (nombre)   texto += `\n\n👤 *Nombre:* ${nombre}`
+    if (producto) texto += `\n🪨 *Material:* ${producto}`
+    if (cantidad) texto += `\n📐 *Cantidad:* ${cantidad}`
+    if (msg)      texto += `\n💬 *Proyecto:* ${msg}`
+    texto += `\n\n¿Me pueden ayudar?`
+    window.open(`https://wa.me/51968603237?text=${encodeURIComponent(texto)}`, '_blank')
+  }
+</script>
+</body>
+</html>
